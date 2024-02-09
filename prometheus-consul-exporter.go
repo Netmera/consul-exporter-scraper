@@ -29,7 +29,7 @@ func main() {
 	}
 
 	// Load the configuration file
-	config, err := utils.LoadConfigFromFile("exporter.yaml")
+	config, err := utils.LoadConfigFromFile("configs/exporter.yaml")
 	if err != nil {
 		log.Fatalf("Error loading configuration: %v", err)
 	}
