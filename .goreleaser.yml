@@ -1,0 +1,23 @@
+before:
+  hooks:
+    - go mod download
+    - go mod tidy
+builds:
+  - goos:
+      - linux
+    goarch:
+      - amd64
+checksum:
+  name_template: 'checksums.txt'
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+archives:
+- id: prometheus-consul-exporter-archive
+  name_template: |-
+    prometheus-consul-exporter_{{.Tag}}_{{.Os}}_{{.Arch}}
+  builds:
+    - prometheus-consul-exporter
+  files: ["LICENSE","config.yaml"]
