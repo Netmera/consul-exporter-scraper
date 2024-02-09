@@ -13,20 +13,17 @@ import (
 
 // LoadConfigFromFile reads configuration from a YAML file
 func LoadConfigFromFile(filename string) (*models.CheckPortModel, error) {
-	// Dosya yolunu bul
 	filepath, err := filepath.Abs(filename)
 	if err != nil {
 		return nil, err
 	}
 
-	// Dosyayı aç
 	file, err := os.Open(filepath)
 	if err != nil {
 		return nil, err
 	}
 	defer file.Close()
 
-	// Yapılandırma verilerini parse et
 	var config models.CheckPortModel
 	decoder := yaml.NewDecoder(file)
 	err = decoder.Decode(&config)
