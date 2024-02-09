@@ -1,0 +1,15 @@
+{{ range . }}
+{
+  "services": [
+    {
+      "id": '{{.hostname}}',
+      "name": '{{.hostname}}',
+      "address": '{{.address}}',
+      "port": {{.port}},
+      "meta": {
+        "env": '{{.environment}}',
+        "type": '{{.exporterType}}'
+      }
+    }
+  ]
+}
