@@ -2,25 +2,30 @@ package utils
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"net/http"
 )
 
 func RegisterServiceWithConsul(jsonData []byte, consulAddress string) error {
-	jsonData, err := json.Marshal(jsonData)
+	client := &http.Client{}
+
+	// Create a new PUT request
+	req, err := http.NewRequest("PUT", consulAddress, bytes.NewBuffer(jsonData))
 	if err != nil {
-		return fmt.Errorf("Error marshaling JSON: %v", err)
+		return fmt.Errorf("Error creating PUT request: %v", err)
 	}
 
-	consulURL := fmt.Sprintf("http://%s/v1/agent/service/register", consulAddress)
+	// Set the Content-Type header
+	req.Header.Set("Content-Type", "application/json")
 
-	resp, err := http.Post(consulURL, "application/json", bytes.NewBuffer(jsonData))
+	// Send the request
+	resp, err := client.Do(req)
 	if err != nil {
-		return fmt.Errorf("Error sending request to Consul API: %v", err)
+		return fmt.Errorf("Error sending PUT request to Consul API: %v", err)
 	}
 	defer resp.Body.Close()
 
+	// Check the response status code
 	if resp.StatusCode != http.StatusOK {
 		return fmt.Errorf("Unexpected status code: %d", resp.StatusCode)
 	}
