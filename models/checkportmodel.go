@@ -9,5 +9,5 @@ type CheckPortModel struct {
 type ExporterModel struct {
 	Name       string `json:"name"`
 	Port       int    `json:"port"`
-	ExportType string `json:"exportType"`
+	ExportType string `json:"exporttype"`
 }
