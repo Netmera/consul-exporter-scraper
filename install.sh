@@ -61,7 +61,6 @@ EOF
 
 # Reload systemd, enable the service, and start it
 systemctl daemon-reload
-systemctl enable --now prometheus-consul-exporter.timer
 
 # Remove temporary files
 rm -rf /tmp/prometheus-consul-exporter.tar.gz
