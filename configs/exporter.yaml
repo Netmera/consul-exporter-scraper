@@ -3,6 +3,7 @@
         {"name": "Mongo Exporter", "port": 27017, "exportType": "mongodb"},
         {"name": "Kafka Exporter", "port": 9092, "exportType": "kafka"},
         {"name": "Cassandra Exporter", "port": 9042, "exportType": "cassandra"},
-        {"name": "ClickHouse Exporter", "port": 8123, "exportType": "clickhouse"}
+        {"name": "ClickHouse Exporter", "port": 8123, "exportType": "clickhouse"},
+        {"name": "Node Exporter", "port": 9100, "exportType": "node-exporter"}
     ]
 }
