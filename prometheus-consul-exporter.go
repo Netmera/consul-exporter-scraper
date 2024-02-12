@@ -48,6 +48,9 @@ func main() {
 	}
 	// Prepare data for Consul API
 	for _, port := range openPorts {
+		fmt.Println(port)
+		fmt.Println("********")
+		fmt.Println(port.ExportType)
 		// Prepare data
 		serviceInfo := models.ServiceInfo{
 			ID:      *Environment,
