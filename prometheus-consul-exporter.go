@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	Environment := flag.String("Environment", "", "Vırtual Machine Environment")
+	environment := flag.String("environment", "", "Virtual Machine Environment")
 	flag.Parse()
 
 	// Get hostname
@@ -46,13 +46,13 @@ func main() {
 		// Prepare data
 		serviceInfo := models.ServiceInfo{
 			ID:      hostname,
-			Name:    *Environment,
+			Name:    *environment,
 			Address: ips[0].String(),
 			Port:    port.Port,
 			Meta: struct {
 				Env  string `json:"env"`
 				Type string `json:"type"`
-			}{Env: *Environment, Type: port.ExportType},
+			}{Env: *environment, Type: port.ExportType},
 		}
 
 		// Convert struct to JSON
