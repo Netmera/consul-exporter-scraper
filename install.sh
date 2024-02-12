@@ -82,5 +82,3 @@ echo "systemctl start prometheus-consul-exporter"
 echo "systemctl enable prometheus-consul-exporter"
 echo "systemctl start prometheus-consul-exporter.timer"
 echo "systemctl enable prometheus-consul-exporter.timer"
-```
-The script is designed to be run on a Linux system. It first determines the latest version of the Prometheus Consul Exporter by querying the GitHub API. It then constructs the download URL and downloads the binary file. After that, it extracts the downloaded file and copies it to the `/usr/local/bin` directory. It also creates a systemd service file and a systemd timer file to manage the execution of the exporter. Finally, it cleans up temporary files and provides instructions for further configuration and starting the service.
