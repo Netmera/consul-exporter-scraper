@@ -49,8 +49,8 @@ func main() {
 	for _, port := range openPorts {
 		// Prepare data
 		serviceInfo := models.ServiceInfo{
-			ID:      *Environment,
-			Name:    hostname,
+			ID:      hostname,
+			Name:    *Environment,
 			Address: ips[0].String(),
 			Port:    port.Port,
 			Meta: struct {
