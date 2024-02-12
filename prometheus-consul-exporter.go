@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
@@ -57,7 +58,14 @@ func main() {
 			}{Env: *Environment, Type: port.ExportType},
 		}
 
-		fmt.Println("Data sent to Consul API:", serviceInfo)
+		// Convert struct to JSON
+		jsonData, err := json.Marshal(serviceInfo)
+		if err != nil {
+			log.Fatalf("Error marshaling JSON: %v", err)
+		}
+
+		// Now you can use jsonData variable to send data to Consul API
+		fmt.Println("Data sent to Consul API:", string(jsonData))
 	}
 
 }
