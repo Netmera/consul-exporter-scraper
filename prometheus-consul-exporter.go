@@ -28,8 +28,6 @@ func main() {
 		return
 	}
 
-	fmt.Println("Hostname:", hostname)
-	fmt.Println("IP Addresses:")
 	for _, ip := range ips {
 		fmt.Println("-", ip)
 	}
@@ -39,21 +37,15 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error loading configuration: %v", err)
 	}
-	fmt.Println(config)
 
 	openPorts := make([]models.ExporterModel, 0)
 	for _, exporter := range config.Exporters {
-		fmt.Println(exporter)
 		if utils.CheckPortOpen(exporter.Port) {
 			openPorts = append(openPorts, exporter)
-			fmt.Println(openPorts)
 		}
 	}
 	// Prepare data for Consul API
 	for _, port := range openPorts {
-		fmt.Println(port)
-		fmt.Println("********")
-		fmt.Println(port.ExportType)
 		// Prepare data
 		serviceInfo := models.ServiceInfo{
 			ID:      *Environment,
@@ -72,8 +64,11 @@ func main() {
 			log.Fatalf("Error marshaling JSON: %v", err)
 		}
 
-		// Now you can use jsonData variable to send data to Consul API
-		fmt.Println("Data sent to Consul API:", string(jsonData))
+		err = utils.RegisterServiceWithConsul(jsonData)
+		if err != nil {
+			log.Fatalf("Error registering service with Consul: %v", err)
+		}
+
 	}
 
 }
