@@ -7,13 +7,13 @@ import (
 	"net/http"
 )
 
-func registerServiceWithConsul(jsonData []byte, consulHostname string) error {
-	jsonData, err := json.Marshal(serviceInfo)
+func RegisterServiceWithConsul(jsonData []byte, consulAddress string) error {
+	jsonData, err := json.Marshal(jsonData)
 	if err != nil {
 		return fmt.Errorf("Error marshaling JSON: %v", err)
 	}
 
-	consulURL := "http://{{cosulhostname}}/v1/agent/service/register"
+	consulURL := fmt.Sprintf("http://%s/v1/agent/service/register", consulAddress)
 
 	resp, err := http.Post(consulURL, "application/json", bytes.NewBuffer(jsonData))
 	if err != nil {

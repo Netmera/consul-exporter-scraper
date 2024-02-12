@@ -1,4 +1,5 @@
 {
+    "consuladress": "10.34.166.52",
     "exporters": [
         {"name": "Mongo Exporter", "port": 27017, "exporttype": "mongodb"},
         {"name": "Kafka Exporter", "port": 9092, "exporttype": "kafka"},
