@@ -20,3 +20,5 @@ archives:
     prometheus-consul-exporter_{{.Tag}}_{{.Os}}_{{.Arch}}
   builds:
     - prometheus-consul-exporter
+  files:
+    - configs/exporter.yaml
