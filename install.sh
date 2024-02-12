@@ -23,7 +23,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Extract the downloaded file
-tar xzf /tmp/prometheus-consul-exporter.tar.gz -C /usr/local/bin --strip-components=1
+tar xzf /tmp/prometheus-consul-exporter.tar.gz -C /tmp
 
 # Check if the file copying operation was successful
 if [ $? -ne 0 ]; then
@@ -62,17 +62,18 @@ EOF
 # Reload systemd, enable the service, and start it
 systemctl daemon-reload
 
+# Additional steps
+# Create /etc/prometheus-consul-exporter directory and copy exporter.yaml from GitHub
+mkdir -p /etc/prometheus-consul-exporter
+mv /tmp/configs/exporter.yaml /etc/prometheus-consul-exporter/exporter.yaml
+mv /tmp/prometheus-consul-exporter /usr/local/bin/prometheus-consul-exporter
+
 # Remove temporary files
 rm -rf /tmp/prometheus-consul-exporter.tar.gz
 rm -rf /tmp/prometheus-consul-exporter
 rm -rf /tmp/configs
 rm -rf /tmp/README.md
 rm -rf /tmp/LICENSE
-
-# Additional steps
-# Create /etc/prometheus-consul-exporter directory and copy exporter.yaml from GitHub
-mkdir -p /etc/prometheus-consul-exporter
-mv /tmp/configs/exporter.yaml /etc/prometheus-consul-exporter/exporter.yaml
 
 # Display success message
 echo "Installation successful. Prometheus Consul Exporter has been installed and configured."
