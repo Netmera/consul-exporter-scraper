@@ -39,6 +39,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error loading configuration: %v", err)
 	}
+	fmt.Println(config)
 
 	openPorts := make([]models.ExporterModel, 0)
 	for _, exporter := range config.Exporters {
