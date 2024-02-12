@@ -1,13 +1,16 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 
+	"github.com/Netmera/prometheus-consul-exporter/models"
 	"github.com/Netmera/prometheus-consul-exporter/utils"
 )
 
 func main() {
+	Environment := flag.String("Environment", "", "Vırtual Machine Environment")
 	// Get hostname
 	hostname, err := utils.GetHostname()
 	if err != nil {
@@ -34,13 +37,27 @@ func main() {
 		log.Fatalf("Error loading configuration: %v", err)
 	}
 
-	// Check port for each exporter
+	openPorts := make([]models.ExporterModel, 0)
 	for _, exporter := range config.Exporters {
-		fmt.Printf("Checking port for %s exporter...\n", exporter.Name)
 		if utils.CheckPortOpen(exporter.Port) {
-			fmt.Printf("Port %d is open for %s exporter\n", exporter.Port, exporter.Name)
-		} else {
-			fmt.Printf("Port %d is closed for %s exporter\n", exporter.Port, exporter.Name)
+			openPorts = append(openPorts, exporter)
 		}
 	}
+	// Prepare data for Consul API
+	for _, port := range openPorts {
+		// Prepare data
+		serviceInfo := models.ServiceInfo{
+			ID:      *Environment,
+			Name:    hostname,
+			Address: ips[0].String(),
+			Port:    port.Port,
+			Meta: struct {
+				Env  string `json:"env"`
+				Type string `json:"type"`
+			}{Env: *Environment, Type: port.ExportType},
+		}
+
+		fmt.Println("Data sent to Consul API:", serviceInfo)
+	}
+
 }
