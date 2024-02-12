@@ -28,10 +28,6 @@ func main() {
 		return
 	}
 
-	for _, ip := range ips {
-		fmt.Println("-", ip)
-	}
-
 	// Load the configuration file
 	config, err := utils.LoadConfigFromFile("configs/exporter.yaml")
 	if err != nil {
