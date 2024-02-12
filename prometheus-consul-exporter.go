@@ -42,6 +42,7 @@ func main() {
 
 	openPorts := make([]models.ExporterModel, 0)
 	for _, exporter := range config.Exporters {
+		fmt.Println(exporter)
 		if utils.CheckPortOpen(exporter.Port) {
 			openPorts = append(openPorts, exporter)
 			fmt.Println(openPorts)
