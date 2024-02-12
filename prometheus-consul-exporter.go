@@ -37,7 +37,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error loading configuration: %v", err)
 	}
-	consulAddress := config.ConsulAddress
+	consulURL := fmt.Sprintf("http://%s:%d/v1/agent/service/register", config.ConsulAddress, config.ConsulPort)
 
 	openPorts := make([]models.ExporterModel, 0)
 	for _, exporter := range config.Exporters {
@@ -65,7 +65,7 @@ func main() {
 			log.Fatalf("Error marshaling JSON: %v", err)
 		}
 
-		err = utils.RegisterServiceWithConsul(jsonData, consulAddress)
+		err = utils.RegisterServiceWithConsul(jsonData, consulURL)
 		if err != nil {
 			log.Fatalf("Error registering service with Consul: %v", err)
 		}
