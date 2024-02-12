@@ -1,6 +1,5 @@
 {
     "consuladress": "", #consul address
-    "consulport": "8500", #consul port
     "exporters": [
         {"name": "Mongo Exporter", "port": 27017, "exporttype": "mongodb"},
         {"name": "Kafka Exporter", "port": 9092, "exporttype": "kafka"},

@@ -37,7 +37,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error loading configuration: %v", err)
 	}
-	consulURL := fmt.Sprintf("http://%s:%d/v1/agent/service/register", config.ConsulAddress, config.ConsulPort)
+	consulURL := fmt.Sprintf("http://%s/v1/agent/service/register", config.ConsulAddress)
 
 	openPorts := make([]models.ExporterModel, 0)
 	for _, exporter := range config.Exporters {
