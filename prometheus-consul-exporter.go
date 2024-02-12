@@ -44,6 +44,7 @@ func main() {
 	for _, exporter := range config.Exporters {
 		if utils.CheckPortOpen(exporter.Port) {
 			openPorts = append(openPorts, exporter)
+			fmt.Println(openPorts)
 		}
 	}
 	// Prepare data for Consul API
