@@ -20,4 +20,3 @@ archives:
     prometheus-consul-exporter_{{.Tag}}_{{.Os}}_{{.Arch}}
   builds:
     - prometheus-consul-exporter
-  files: ["LICENSE","config.yaml"]
