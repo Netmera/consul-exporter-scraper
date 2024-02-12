@@ -12,6 +12,8 @@ import (
 
 func main() {
 	Environment := flag.String("Environment", "", "Vırtual Machine Environment")
+	flag.Parse()
+
 	// Get hostname
 	hostname, err := utils.GetHostname()
 	if err != nil {
