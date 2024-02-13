@@ -36,11 +36,12 @@ cat <<EOF > /etc/systemd/system/prometheus-consul-exporter.service
 [Unit]
 Description=Prometheus Consul Exporter
 After=network.target
+Wants=prometheus-consul-exporter.timer
 
 [Service]
-Type=simple
-ExecStart=/usr/local/bin/prometheus-consul-exporter
-Restart=always
+Type=oneshot
+ExecStart=/usr/local/bin/prometheus-consul-exporter -environment="test"
+RemainAfterExit=true
 
 [Install]
 WantedBy=multi-user.target
@@ -49,10 +50,12 @@ EOF
 # Create the systemd timer file
 cat <<EOF > /etc/systemd/system/prometheus-consul-exporter.timer
 [Unit]
-Description=Run prometheus-consul-exporter every hour
+Description=Prometheus Consul Exporter Timer
+Requires=prometheus-consul-exporter.service
 
 [Timer]
-OnCalendar=hourly
+Unit=prometheus-consul-exporter.service
+OnCalendar=*-*-* *:00:00
 Persistent=true
 
 [Install]
