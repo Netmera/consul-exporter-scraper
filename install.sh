@@ -39,8 +39,10 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/prometheus-consul-exporter
-Restart=always
+ExecStart=/usr/local/bin/prometheus-consul-exporter -environment="test"
+Restart=no
+RestartSec=1h
+RemainAfterExit=true
 
 [Install]
 WantedBy=multi-user.target
