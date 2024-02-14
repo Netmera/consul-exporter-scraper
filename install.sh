@@ -78,7 +78,6 @@ echo -e "\n\e[94mStep 6:\e[0m Additional steps...\n"
 mkdir -p /etc/prometheus-consul-exporter
 mv /tmp/configs/exporter.yaml /etc/prometheus-consul-exporter/exporter.yaml
 mv /tmp/prometheus-consul-exporter /usr/local/bin/prometheus-consul-exporter
-mkdir -p /var/log/prometheus-consul-exporter
 
 
 # Remove temporary files
