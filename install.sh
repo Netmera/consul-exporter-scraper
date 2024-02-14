@@ -80,6 +80,7 @@ mv /tmp/configs/exporter.yaml /etc/prometheus-consul-exporter/exporter.yaml
 mv /tmp/prometheus-consul-exporter /usr/local/bin/prometheus-consul-exporter
 mkdir -p /var/log/prometheus-consul-exporter
 
+
 # Remove temporary files
 echo -e "\n\e[94mStep 7:\e[0m Cleaning up temporary files...\n"
 rm -rf /tmp/prometheus-consul-exporter.tar.gz
