@@ -9,6 +9,7 @@ import (
 	"github.com/Netmera/prometheus-consul-exporter/models"
 	"github.com/Netmera/prometheus-consul-exporter/utils"
 	"github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus/hooks/writer"
 )
 
 func main() {
@@ -29,6 +30,18 @@ func main() {
 
 	logrus.SetOutput(os.Stdout)
 	logrus.SetFormatter(&logrus.TextFormatter{})
+
+	// Create a new logger instance
+	logger := logrus.New()
+
+	// Add log file hook
+	logger.AddHook(&writer.Hook{ // Writer hook for handling logs
+		Writer: logFile,
+		Levels: logrus.AllLevels, // Log all levels
+	})
+
+	// Replace the default logger with the custom one
+	logrus.ReplaceLogger(logger)
 
 	environment := flag.String("environment", "", "Virtual Machine Environment")
 	flag.Parse()
