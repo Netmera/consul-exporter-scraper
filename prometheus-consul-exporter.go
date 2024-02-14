@@ -4,45 +4,13 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"os"
 
 	"github.com/Netmera/prometheus-consul-exporter/models"
 	"github.com/Netmera/prometheus-consul-exporter/utils"
 	"github.com/sirupsen/logrus"
-	"github.com/sirupsen/logrus/hooks/writer"
 )
 
 func main() {
-	// Load the configuration file
-	config, err := utils.LoadConfigFromFile("/etc/prometheus-consul-exporter/exporter.yaml")
-	if err != nil {
-		logrus.Fatalf("Error loading configuration: %v", err)
-	}
-
-	logFile, err := os.OpenFile(config.Logfile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
-
-	if err != nil {
-		logrus.Errorf("Error opening log file: %v", err)
-		return
-	}
-
-	defer logFile.Close()
-
-	logrus.SetOutput(os.Stdout)
-	logrus.SetFormatter(&logrus.TextFormatter{})
-
-	// Create a new logger instance
-	logger := logrus.New()
-
-	// Add log file hook
-	logger.AddHook(&writer.Hook{ // Writer hook for handling logs
-		Writer: logFile,
-		Levels: logrus.AllLevels, // Log all levels
-	})
-
-	// Replace the default logger with the custom one
-	logrus.ReplaceLogger(logger)
-
 	environment := flag.String("environment", "", "Virtual Machine Environment")
 	flag.Parse()
 
@@ -56,6 +24,12 @@ func main() {
 	ips, err := utils.GetIPAddresses()
 	if err != nil {
 		logrus.Fatalf("Error getting IP addresses: %v", err)
+	}
+
+	// Load the configuration file
+	config, err := utils.LoadConfigFromFile("/etc/prometheus-consul-exporter/exporter.yaml")
+	if err != nil {
+		logrus.Fatalf("Error loading configuration: %v", err)
 	}
 
 	consulURL := fmt.Sprintf("http://%s/v1/agent/service/register", config.ConsulAddress)
@@ -92,6 +66,7 @@ func main() {
 		}
 
 		logrus.Infof("Service registered with Consul: %s", serviceInfo.Name)
+
 	}
 
 }
