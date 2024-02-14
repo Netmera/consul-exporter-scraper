@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Set environment
+environment=$1
+
 # Determine the latest version
 LATEST_VERSION=$(curl -sL https://github.com/Netmera/prometheus-consul-exporter/releases/latest | grep -o 'tag/v[0-9]\+\.[0-9]\+\.[0-9]\+' | awk -F '/' '{print $2}' | uniq)
 
@@ -43,7 +46,7 @@ Wants=prometheus-consul-exporter.timer
 
 [Service]
 Type=oneshot
-ExecStart=/usr/local/bin/prometheus-consul-exporter -environment="test"
+ExecStart=/usr/local/bin/prometheus-consul-exporter -environment=${environment}
 
 [Install]
 WantedBy=multi-user.target
