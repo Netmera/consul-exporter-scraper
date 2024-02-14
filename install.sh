@@ -73,6 +73,7 @@ rm -rf /tmp/LICENSE
 # Create /etc/prometheus-consul-exporter directory and copy exporter.yaml from GitHub
 mkdir -p /etc/prometheus-consul-exporter
 mv /tmp/configs/exporter.yaml /etc/prometheus-consul-exporter/exporter.yaml
+mkdir -p /var/log/prometheus-consul-exporter
 
 # Display success message
 echo "Installation successful. Prometheus Consul Exporter has been installed and configured."
