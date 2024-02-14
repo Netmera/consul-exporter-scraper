@@ -4,35 +4,47 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"log"
+	"os"
 
 	"github.com/Netmera/prometheus-consul-exporter/models"
 	"github.com/Netmera/prometheus-consul-exporter/utils"
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
+	// Load the configuration file
+	config, err := utils.LoadConfigFromFile("/etc/prometheus-consul-exporter/exporter.yaml")
+	if err != nil {
+		logrus.Fatalf("Error loading configuration: %v", err)
+	}
+
+	logFile, err := os.OpenFile(config.Logfile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+
+	if err != nil {
+		logrus.Errorf("Error opening log file: %v", err)
+		return
+	}
+
+	defer logFile.Close()
+
+	logrus.SetOutput(os.Stdout)
+	logrus.SetFormatter(&logrus.TextFormatter{})
+
 	environment := flag.String("environment", "", "Virtual Machine Environment")
 	flag.Parse()
 
 	// Get hostname
 	hostname, err := utils.GetHostname()
 	if err != nil {
-		fmt.Println("Error getting hostname:", err)
-		return
+		logrus.Fatalf("Error getting hostname: %v", err)
 	}
 
 	// Get IP addresses
 	ips, err := utils.GetIPAddresses()
 	if err != nil {
-		fmt.Println("Error getting IP addresses:", err)
-		return
+		logrus.Fatalf("Error getting IP addresses: %v", err)
 	}
 
-	// Load the configuration file
-	config, err := utils.LoadConfigFromFile("/etc/prometheus-consul-exporter/exporter.yaml")
-	if err != nil {
-		log.Fatalf("Error loading configuration: %v", err)
-	}
 	consulURL := fmt.Sprintf("http://%s/v1/agent/service/register", config.ConsulAddress)
 
 	openPorts := make([]models.ExporterModel, 0)
@@ -58,14 +70,15 @@ func main() {
 		// Convert struct to JSON
 		jsonData, err := json.Marshal(serviceInfo)
 		if err != nil {
-			log.Fatalf("Error marshaling JSON: %v", err)
+			logrus.Fatalf("Error marshaling JSON: %v", err)
 		}
 
 		err = utils.RegisterServiceWithConsul(jsonData, consulURL)
 		if err != nil {
-			log.Fatalf("Error registering service with Consul: %v", err)
+			logrus.Fatalf("Error registering service with Consul: %v", err)
 		}
 
+		logrus.Infof("Service registered with Consul: %s", serviceInfo.Name)
 	}
 
 }

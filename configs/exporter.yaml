@@ -1,5 +1,6 @@
 {
     "consuladress": "", #consul address
+    "logfile": "/var/log/prometheus-consul-exporter.log",
     "exporters": [
         {"name": "Mongo Exporter", "port": 27017, "exporttype": "mongodb"},
         {"name": "Kafka Exporter", "port": 9092, "exporttype": "kafka"},
