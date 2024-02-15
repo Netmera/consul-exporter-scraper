@@ -46,7 +46,7 @@ func CheckPortOpen(port int) bool {
 	address := net.JoinHostPort("localhost", strconv.Itoa(port))
 	conn, err := net.DialTimeout("tcp", address, time.Second)
 	if err != nil {
-		logrus.Errorf("Error checking port %d: %v", port, err)
+		logrus.Warnf("Error checking port %d: %v", port, err)
 		return false
 	}
 	defer conn.Close()
