@@ -1,4 +1,4 @@
 ---
-prometheus_consul_exporter_consul_adress: "http://consul:8500"
-prometheus_consul_exporter_env: "production"
-prometheus_consul_exporter_version: "v0.0.1"
+consul_exporter_scraper_consul_adress: "http://consul:8500"
+consul_exporter_scraper_env: "production"
+consul_exporter_scraper_version: "v0.0.1"

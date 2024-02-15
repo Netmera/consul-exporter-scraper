@@ -1,0 +1,11 @@
+[Unit]
+Description=Consul Exporter Scraper
+After=network.target
+Wants=consul-exporter-scraper.timer
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/consul-exporter-scraper -environment={{ consul_exporter_scraper_env }}
+
+[Install]
+WantedBy=multi-user.target

@@ -12,16 +12,16 @@
 <br />
 <div align="center">
 
-  <h3 align="center">Prometheus Consul Exporter</h3>
+  <h3 align="center">Consul Exporter Scraper</h3>
 
   <p align="center">
-    Prometheus Consul Exporter is a tool that automatically discovers exporters running on a machine and registers them with Consul for easy service discovery.
+    Consul Exporter Scraper is a tool that automatically discovers exporters running on a machine and registers them with Consul for easy service discovery.
   </p>
 </div>
 
 ## Getting Started
 
-Follow these steps to get started with using `prometheus-consul-exporter`.
+Follow these steps to get started with using `consul-exporter-scraper`.
 
 ### Prerequisites
 
@@ -37,8 +37,8 @@ The following prerequisites are required for the project to be used:
 1. Clone this repository:
 
    ```bash
-   git clone git@github.com:Netmera/prometheus-consul-exporter.git
-   cd prometheus-consul-exporter
+   git clone git@github.com:Netmera/consul-exporter-scraper.git
+   cd consul-exporter-scraper
   
 2. Install dependencies:
 
@@ -55,7 +55,7 @@ The following prerequisites are required for the project to be used:
 4. Run the built binary:
 
    ```bash
-     ./prometheus-consul-exporter -environment=<environment>
+     ./consul-exporter-scraper -environment=<environment>
     ```
 
 #### Installation with install.sh
@@ -63,8 +63,8 @@ The following prerequisites are required for the project to be used:
 1. Clone this repository:
 
    ```bash
-   git clone git@github.com:Netmera/prometheus-consul-exporter.git
-   cd prometheus-consul-exporter
+   git clone git@github.com:Netmera/consul-exporter-scraper.git
+   cd consul-exporter-scraper
   
 2. Run the install script:
 
@@ -77,8 +77,8 @@ The following prerequisites are required for the project to be used:
 1. Clone this repository:
 
    ```bash
-   git clone git@github.com:Netmera/prometheus-consul-exporter.git
-   cd prometheus-consul-exporter
+   git clone git@github.com:Netmera/consul-exporter-scraper.git
+   cd consul-exporter-scraper
     ```
 
 2. Ensure you have Ansible installed on your local machine.
@@ -103,13 +103,13 @@ The following prerequisites are required for the project to be used:
 Distributed under the APACHE-2.0 License. See `LICENSE` for more information.
 
 
-[contributors-shield]: https://img.shields.io/github/contributors/Netmera/prometheus-consul-exporter?style=for-the-badge
-[contributors-url]: https://github.com/Netmera/prometheus-consul-exporter/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/Netmera/prometheus-consul-exporter?style=for-the-badge
-[forks-url]: https://github.com/Netmera/prometheus-consul-exporter/network/members
-[stars-shield]: https://img.shields.io/github/stars/Netmera/prometheus-consul-exporter?style=for-the-badge
-[stars-url]: https://github.com/Netmera/prometheus-consul-exporter/stargazers
-[issues-shield]: https://img.shields.io/github/issues/Netmera/prometheus-consul-exporter?style=for-the-badge
-[issues-url]: https://github.com/Netmera/prometheus-consul-exporter/issues
-[license-shield]: https://img.shields.io/github/license/Netmera/prometheus-consul-exporter?style=for-the-badge
-[license-url]: https://github.com/Netmera/prometheus-consul-exporter/blob/main/LICENSE
+[contributors-shield]: https://img.shields.io/github/contributors/Netmera/consul-exporter-scraper?style=for-the-badge
+[contributors-url]: https://github.com/Netmera/consul-exporter-scraper/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Netmera/consul-exporter-scraper?style=for-the-badge
+[forks-url]: https://github.com/Netmera/consul-exporter-scraper/network/members
+[stars-shield]: https://img.shields.io/github/stars/Netmera/consul-exporter-scraper?style=for-the-badge
+[stars-url]: https://github.com/Netmera/consul-exporter-scraper/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Netmera/consul-exporter-scraper?style=for-the-badge
+[issues-url]: https://github.com/Netmera/consul-exporter-scraper/issues
+[license-shield]: https://img.shields.io/github/license/Netmera/consul-exporter-scraper?style=for-the-badge
+[license-url]: https://github.com/Netmera/consul-exporter-scraper/blob/main/LICENSE

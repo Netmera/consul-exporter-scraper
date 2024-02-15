@@ -5,8 +5,8 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/Netmera/prometheus-consul-exporter/models"
-	"github.com/Netmera/prometheus-consul-exporter/utils"
+	"github.com/Netmera/consul-exporter-scraper/models"
+	"github.com/Netmera/consul-exporter-scraper/utils"
 	"github.com/sirupsen/logrus"
 )
 
@@ -27,7 +27,7 @@ func main() {
 	}
 
 	// Load the configuration file
-	config, err := utils.LoadConfigFromFile("/etc/prometheus-consul-exporter/exporter.yaml")
+	config, err := utils.LoadConfigFromFile("/etc/consul-exporter-scraper/exporter.yaml")
 	if err != nil {
 		logrus.Fatalf("Error loading configuration: %v", err)
 	}

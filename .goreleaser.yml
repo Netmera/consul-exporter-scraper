@@ -15,10 +15,10 @@ changelog:
     exclude:
       - '^docs:'
 archives:
-- id: prometheus-consul-exporter-archive
+- id: consul-exporter-scraper-archive
   name_template: |-
-    prometheus-consul-exporter_{{.Tag}}_{{.Os}}_{{.Arch}}
+    consul-exporter-scraper_{{.Tag}}_{{.Os}}_{{.Arch}}
   builds:
-    - prometheus-consul-exporter
+    - consul-exporter-scraper
   files:
     - configs/exporter.yaml
