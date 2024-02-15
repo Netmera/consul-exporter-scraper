@@ -2,8 +2,8 @@ package models
 
 // CheckPortModel represents the structure of the configuration file
 type CheckPortModel struct {
-	ConsulAddress string          `yaml:"consuladress"`
-	Exporters     []ExporterModel `json:"exporters"`
+	ConsulAddresses []string        `yaml:"consuladdresses"`
+	Exporters       []ExporterModel `json:"exporters"`
 }
 
 // ExporterModel represents exporter information
