@@ -1,0 +1,11 @@
+---
+- name: Install and configure Prometheus Consul Exporter
+  hosts: hosts
+  become: yes
+  vars_files:
+    - default/main.yaml
+  tasks:
+    - import_tasks: tasks/install.yaml
+    - import_tasks: tasks/configure.yaml
+    - import_tasks: tasks/start.yaml
+    - import_tasks: tasks/removefile.yaml

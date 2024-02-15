@@ -1,0 +1,31 @@
+---
+- name: Download Prometheus Consul Exporter
+  get_url:
+    url: "https://github.com/Netmera/prometheus-consul-exporter/releases/download/{{ prometheus_consul_exporter_version }}/prometheus-consul-exporter_{{ prometheus_consul_exporter_version }}_linux_amd64.tar.gz"
+    dest: "/tmp/prometheus-consul-exporter.tar.gz"
+    mode: "0644"
+
+- name: Extract downloaded file
+  unarchive:
+    src: "/tmp/prometheus-consul-exporter.tar.gz"
+    dest: "/tmp"
+    remote_src: yes
+
+- name: Create systemd service file
+  template:
+    src: templates/prometheus-consul-exporter.service.j2
+    dest: /etc/systemd/system/prometheus-consul-exporter.service
+
+- name: Create systemd timer file
+  template:
+    src: templates/prometheus-consul-exporter.timer.j2
+    dest: /etc/systemd/system/prometheus-consul-exporter.timer
+
+- name: Create /etc/prometheus-consul-exporter directory
+  file:
+    path: "/etc/prometheus-consul-exporter"
+    state: directory
+    mode: "0755"
+
+- name: Move prometheus-consul-exporter binary to /usr/local/bin
+  command: "mv /tmp/prometheus-consul-exporter /usr/local/bin/prometheus-consul-exporter"

@@ -1,0 +1,11 @@
+[Unit]
+Description=Prometheus Consul Exporter
+After=network.target
+Wants=prometheus-consul-exporter.timer
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/prometheus-consul-exporter -environment={{ prometheus_consul_exporter_env }}
+
+[Install]
+WantedBy=multi-user.target

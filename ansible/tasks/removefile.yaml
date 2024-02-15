@@ -1,0 +1,11 @@
+---
+- name: Clean up temporary files
+  file:
+    path: "/tmp/{{ item }}"
+    state: absent
+  with_items:
+    - prometheus-consul-exporter.tar.gz
+    - prometheus-consul-exporter
+    - configs
+    - README.md
+    - LICENSE

@@ -1,0 +1,12 @@
+---
+- name: Start Prometheus Consul Exporter service
+  systemd:
+    name: prometheus-consul-exporter
+    state: started
+    enabled: yes
+
+- name: Start Prometheus Consul Exporter timer service
+  systemd:
+    name: prometheus-consul-exporter.timer
+    state: started
+    enabled: yes
