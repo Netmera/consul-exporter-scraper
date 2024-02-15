@@ -32,8 +32,6 @@ func main() {
 		logrus.Fatalf("Error loading configuration: %v", err)
 	}
 
-	consulURL := fmt.Sprintf("http://%s/v1/agent/service/register", config.ConsulAddress)
-
 	openPorts := make([]models.ExporterModel, 0)
 	for _, exporter := range config.Exporters {
 		if utils.CheckPortOpen(exporter.Port) {
@@ -60,13 +58,22 @@ func main() {
 			logrus.Fatalf("Error marshaling JSON: %v", err)
 		}
 
-		err = utils.RegisterServiceWithConsul(jsonData, consulURL)
-		if err != nil {
-			logrus.Fatalf("Error registering service with Consul: %v", err)
+		// Register service with Consul
+		for _, consulAddress := range config.ConsulAddresses {
+			consulURL := fmt.Sprintf("http://%s/v1/agent/service/register", consulAddress)
+
+			err = utils.RegisterServiceWithConsul(jsonData, consulURL)
+			if err != nil {
+				logrus.Warnf("Error registering service with Consul at %s: %v", consulAddress, err)
+				continue
+			}
+
+			logrus.Infof("Service registered with Consul at %s", consulAddress)
+			break
 		}
 
-		logrus.Infof("Service registered with Consul: %s", serviceInfo.Name)
-
+		if err != nil {
+			logrus.Fatalf("Failed to register service with any Consul addresses: %v", err)
+		}
 	}
-
 }
