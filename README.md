@@ -15,7 +15,7 @@
   <h3 align="center">Prometheus Consul Exporter</h3>
 
   <p align="center">
-    
+    Prometheus Consul Exporter is a tool that automatically discovers exporters running on a machine and registers them with Consul for easy service discovery.
   </p>
 </div>
 
@@ -32,7 +32,33 @@ The following prerequisites are required for the project to be used:
 
 ### Installation
 
-Follow these steps to build and run the project:
+#### Follow these steps to build and run the project:
+ 
+1. Clone this repository:
+
+   ```bash
+   git clone git@github.com:Netmera/prometheus-consul-exporter.git
+   cd prometheus-consul-exporter
+  
+2. Install dependencies:
+
+   ```bash
+      go mod tidy
+      go mod download
+    ```
+
+3. Build the project
+   ```bash
+     env GOOS=linux GOARCH=amd64 go build .
+    ```
+
+4. Run the built binary:
+
+   ```bash
+     ./prometheus-consul-exporter -environment=<environment>
+    ```
+
+#### Installation with install.sh
 
 1. Clone this repository:
 
@@ -40,11 +66,35 @@ Follow these steps to build and run the project:
    git clone git@github.com:Netmera/prometheus-consul-exporter.git
    cd prometheus-consul-exporter
   
+2. Run the install script:
 
-2. Build the project
    ```bash
-    env GOOS=linux GOARCH=amd64 go build .
+      ./install.sh <environment>
     ```
+
+#### Installation with Ansible
+
+1. Clone this repository:
+
+   ```bash
+   git clone git@github.com:Netmera/prometheus-consul-exporter.git
+   cd prometheus-consul-exporter
+    ```
+
+2. Ensure you have Ansible installed on your local machine.
+
+3. Adjust the variables in default/main.yaml according to your environment:
+    ```bash   
+      ---
+      prometheus_consul_exporter_consul_adress: "http://consul:8500"
+      prometheus_consul_exporter_env: "production"
+      prometheus_consul_exporter_version: "v0.0.1"
+   ```
+
+4. Run the Ansible playbook:
+    ```bash   
+   ansible-playbook -i your_inventory_file install.yml
+   ```
 
 
 <!-- LICENSE -->
