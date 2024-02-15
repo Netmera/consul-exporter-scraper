@@ -34,7 +34,7 @@ The following prerequisites are required for the project to be used:
 
 This configuration file (`exporter.yaml`) is used to define the exporters to be scraped by the Prometheus Consul Exporter. You can specify the details of each exporter, including its name, port, and export type.
 
-- **consuladdress**: The address of the Consul service to connect to.
+- **consuladdresses**: The addresses of the Consul services to connect to.
 
 - **exporters**: A list of exporters to be scraped. Each exporter object should contain the following fields:
   - `name`: The name of the exporter.
@@ -47,7 +47,7 @@ Example `exporter.yaml` file:
 
 ```yaml
 {
-    "consuladdress": "your_consul_address_here",
+    "consuladdresses": ["your_consul_address_1", "your_consul_address_2"],
     "exporters": [
         {"name": "Mongo Exporter", "port": 9216, "exporttype": "mongodb"},
         {"name": "Postgresql Exporter", "port": 9187, "exporttype": "postgresql"},
