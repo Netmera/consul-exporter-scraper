@@ -1,31 +1,31 @@
 ---
-- name: Download Prometheus Consul Exporter
+- name: Download Consul Exporter Scraper
   get_url:
-    url: "https://github.com/Netmera/prometheus-consul-exporter/releases/download/{{ prometheus_consul_exporter_version }}/prometheus-consul-exporter_{{ prometheus_consul_exporter_version }}_linux_amd64.tar.gz"
-    dest: "/tmp/prometheus-consul-exporter.tar.gz"
+    url: "https://github.com/Netmera/consul-exporter-scraper/releases/download/{{ prometheus_consul_exporter_version }}/consul-exporter-scraper_{{ prometheus_consul_exporter_version }}_linux_amd64.tar.gz"
+    dest: "/tmp/consul-exporter-scraper.tar.gz"
     mode: "0644"
 
 - name: Extract downloaded file
   unarchive:
-    src: "/tmp/prometheus-consul-exporter.tar.gz"
+    src: "/tmp/consul-exporter-scraper.tar.gz"
     dest: "/tmp"
     remote_src: yes
 
 - name: Create systemd service file
   template:
-    src: templates/prometheus-consul-exporter.service.j2
-    dest: /etc/systemd/system/prometheus-consul-exporter.service
+    src: templates/consul-exporter-scraper.service.j2
+    dest: /etc/systemd/system/consul-exporter-scraper.service
 
 - name: Create systemd timer file
   template:
-    src: templates/prometheus-consul-exporter.timer.j2
-    dest: /etc/systemd/system/prometheus-consul-exporter.timer
+    src: templates/consul-exporter-scraper.timer.j2
+    dest: /etc/systemd/system/consul-exporter-scraper.timer
 
-- name: Create /etc/prometheus-consul-exporter directory
+- name: Create /etc/consul-exporter-scraper directory
   file:
-    path: "/etc/prometheus-consul-exporter"
+    path: "/etc/consul-exporter-scraper"
     state: directory
     mode: "0755"
 
-- name: Move prometheus-consul-exporter binary to /usr/local/bin
-  command: "mv /tmp/prometheus-consul-exporter /usr/local/bin/prometheus-consul-exporter"
+- name: Move consul-exporter-scraper binary to /usr/local/bin
+  command: "mv /tmp/consul-exporter-scraper /usr/local/bin/consul-exporter-scraper"

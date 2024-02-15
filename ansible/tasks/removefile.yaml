@@ -4,8 +4,8 @@
     path: "/tmp/{{ item }}"
     state: absent
   with_items:
-    - prometheus-consul-exporter.tar.gz
-    - prometheus-consul-exporter
+    - consul-exporter-scraper.tar.gz
+    - consul-exporter-scraper
     - configs
     - README.md
     - LICENSE

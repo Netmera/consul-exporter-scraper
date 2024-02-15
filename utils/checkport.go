@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/Netmera/prometheus-consul-exporter/models"
+	"github.com/Netmera/consul-exporter-scraper/models"
 	"github.com/sirupsen/logrus"
 	yaml "gopkg.in/yaml.v2"
 )

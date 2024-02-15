@@ -1,5 +1,5 @@
 ---
-- name: Install and configure Prometheus Consul Exporter
+- name: Install and configure Consul Exporter Scraper
   hosts: hosts
   become: yes
   vars_files:

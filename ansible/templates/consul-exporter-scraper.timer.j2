@@ -1,0 +1,11 @@
+[Unit]
+Description=Consul Exporter Scraper Timer
+Requires=consul-exporter-scraper.service
+
+[Timer]
+Unit=consul-exporter-scraper.service
+OnCalendar=*-*-* *:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
