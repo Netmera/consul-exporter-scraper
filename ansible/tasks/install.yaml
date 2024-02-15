@@ -1,7 +1,7 @@
 ---
 - name: Download Consul Exporter Scraper
   get_url:
-    url: "https://github.com/Netmera/consul-exporter-scraper/releases/download/{{ prometheus_consul_exporter_version }}/consul-exporter-scraper_{{ prometheus_consul_exporter_version }}_linux_amd64.tar.gz"
+    url: "https://github.com/Netmera/consul-exporter-scraper/releases/download/{{ consul_exporter_scraper_version }}/consul-exporter-scraper_{{ consul_exporter_scraper_version }}_linux_amd64.tar.gz"
     dest: "/tmp/consul-exporter-scraper.tar.gz"
     mode: "0644"
 

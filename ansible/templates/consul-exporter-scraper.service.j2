@@ -5,7 +5,7 @@ Wants=consul-exporter-scraper.timer
 
 [Service]
 Type=oneshot
-ExecStart=/usr/local/bin/consul-exporter-scraper -environment={{ prometheus_consul_exporter_env }}
+ExecStart=/usr/local/bin/consul-exporter-scraper -environment={{ consul_exporter_scraper_env }}
 
 [Install]
 WantedBy=multi-user.target
