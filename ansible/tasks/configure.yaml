@@ -1,0 +1,5 @@
+---
+- name: Prometheus Consul Exporter 
+  template:
+    src: "templates/exporter.yaml.j2"
+    dest: "/etc/prometheus-consul-exporter/exporter.yaml"
