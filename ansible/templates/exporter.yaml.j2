@@ -1,5 +1,5 @@
 {
-    "consuladress": "{{ consul_exporter_scraper_consul_adress }}",
+    "consuladdresses": [{% for ip in consul_exporter_scraper_consul_adress %}"{{ ip }}:8500"{{ "," if not loop.last else "" }} {% endfor %}],
     "exporters": [
         {"name": "Mongo Exporter", "port": 9216, "exporttype": "mongodb"},
         {"name": "Postgresql Exporter", "port": 9187, "exporttype": "postgresql"},
