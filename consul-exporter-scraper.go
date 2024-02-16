@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"os"
 
 	"github.com/Netmera/consul-exporter-scraper/models"
 	"github.com/Netmera/consul-exporter-scraper/utils"
@@ -14,66 +15,67 @@ func main() {
 	environment := flag.String("environment", "", "Virtual Machine Environment")
 	flag.Parse()
 
-	// Get hostname
-	hostname, err := utils.GetHostname()
-	if err != nil {
-		logrus.Fatalf("Error getting hostname: %v", err)
-	}
+	// Check if running in Kubernetes environment
+	inKubernetes := os.Getenv("KUBERNETES_SERVICE_HOST")
 
-	// Get IP addresses
-	ips, err := utils.GetIPAddresses()
-	if err != nil {
-		logrus.Fatalf("Error getting IP addresses: %v", err)
-	}
+	if inKubernetes != "" {
 
-	// Load the configuration file
-	config, err := utils.LoadConfigFromFile("/etc/consul-exporter-scraper/exporter.yaml")
-	if err != nil {
-		logrus.Fatalf("Error loading configuration: %v", err)
-	}
-
-	openPorts := make([]models.ExporterModel, 0)
-	for _, exporter := range config.Exporters {
-		if utils.CheckPortOpen(exporter.Port) {
-			openPorts = append(openPorts, exporter)
-		}
-	}
-	// Prepare data for Consul API
-	for _, port := range openPorts {
-		// Prepare data
-		serviceInfo := models.ServiceInfo{
-			ID:      hostname,
-			Name:    *environment,
-			Address: ips[0].String(),
-			Port:    port.Port,
-			Meta: struct {
-				Env  string `json:"env"`
-				Type string `json:"type"`
-			}{Env: *environment, Type: port.ExportType},
-		}
-
-		// Convert struct to JSON
-		jsonData, err := json.Marshal(serviceInfo)
+	} else {
+		// Get hostname
+		hostname, err := utils.GetHostname()
 		if err != nil {
-			logrus.Fatalf("Error marshaling JSON: %v", err)
+			logrus.Fatalf("Error getting hostname: %v", err)
+		}
+		// Load the configuration file
+		config, err := utils.LoadConfigFromFile("/etc/consul-exporter-scraper/exporter.yaml")
+		if err != nil {
+			logrus.Fatalf("Error loading configuration: %v", err)
 		}
 
-		// Register service with Consul
-		for _, consulAddress := range config.ConsulAddresses {
-			consulURL := fmt.Sprintf("http://%s/v1/agent/service/register", consulAddress)
-
-			err = utils.RegisterServiceWithConsul(jsonData, consulURL)
-			if err != nil {
-				logrus.Warnf("Error registering service with Consul at %s: %v", consulAddress, err)
-				continue
+		openPorts := make([]models.ExporterModel, 0)
+		for _, exporter := range config.Exporters {
+			if utils.CheckPortOpen(exporter.Port) {
+				openPorts = append(openPorts, exporter)
+			}
+		}
+		// Prepare data for Consul API
+		for _, port := range openPorts {
+			// Prepare data
+			serviceInfo := models.ServiceInfo{
+				ID:      hostname,
+				Name:    *environment,
+				Address: ips[0].String(),
+				Port:    port.Port,
+				Meta: struct {
+					Env  string `json:"env"`
+					Type string `json:"type"`
+				}{Env: *environment, Type: port.ExportType},
 			}
 
-			logrus.Infof("Service registered with Consul at %s", consulAddress)
-			break
-		}
+			// Convert struct to JSON
+			jsonData, err := json.Marshal(serviceInfo)
+			if err != nil {
+				logrus.Fatalf("Error marshaling JSON: %v", err)
+			}
 
-		if err != nil {
-			logrus.Fatalf("Failed to register service with any Consul addresses: %v", err)
+			// Register service with Consul
+			for _, consulAddress := range config.ConsulAddresses {
+				consulURL := fmt.Sprintf("http://%s/v1/agent/service/register", consulAddress)
+
+				err = utils.RegisterServiceWithConsul(jsonData, consulURL)
+				if err != nil {
+					logrus.Warnf("Error registering service with Consul at %s: %v", consulAddress, err)
+					continue
+				}
+
+				logrus.Infof("Service registered with Consul at %s", consulAddress)
+				break
+			}
+
+			if err != nil {
+				logrus.Fatalf("Failed to register service with any Consul addresses: %v", err)
+			}
 		}
 	}
+
 }
