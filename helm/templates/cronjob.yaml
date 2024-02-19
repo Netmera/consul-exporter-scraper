@@ -1,0 +1,23 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name:  {{ include "service.fullname" . }}
+  namespace: {{ .Values.namespace }}
+spec:
+  schedule: "{{ .Values.schedule }}"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: {{ .Values.serviceAccountName }}
+          containers:
+            - name: {{ .Values.name }}
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              env:
+                - name: ENVIRONMENT
+                  value: "{{ .Values.env.environment }}"
+                - name: PROMETHEUS_NAMESPACE
+                  value: "{{ .Values.env.prometheusNamespace }}"
+                - name: CONSUL_ADDRESS
+                  value: "{{ .Values.env.consulAddress }}"         
+          restartPolicy: OnFailure

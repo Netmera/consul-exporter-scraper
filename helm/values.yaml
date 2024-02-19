@@ -1,0 +1,19 @@
+name: consul-exporter-scraper
+
+image:
+  repository: netmeraops/consul-exporter-scraper
+  tag: "v0.0.3"
+  pullPolicy: Always
+
+namespace: monitoring
+
+security:
+  enabled: true
+serviceAccountName: consul-exporter-scraper-service-account
+env:
+  environment: "test" 
+  prometheusNamespace: "monitoring"
+  consulAddress: "0.0.0.0"
+
+schedule: "*/30 * * * *"
+

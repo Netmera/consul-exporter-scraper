@@ -1,0 +1,5 @@
+***********
+
+kubectl get cronjob -n {{ .Release.Namespace }}
+
+*********
