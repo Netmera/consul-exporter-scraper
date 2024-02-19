@@ -128,6 +128,53 @@ Example `exporter.yaml` file:
    ansible-playbook -i your_inventory_file install.yml
    ```
 
+#### Installation with Helm 
+
+
+1. Make sure Helm is installed on your console. Refer to the [official Helm documentation](https://helm.sh/docs/intro/install/) for detailed steps.
+
+2. Clone this repository and navigate to the directory:
+
+   ```bash
+   git clone https://github.com/Netmera/consul-exporter-scraper.git
+   cd consul-exporter-scraper
+   ```
+
+3. Open the values.yaml file and make the necessary configurations.
+
+
+```yaml
+      name: consul-exporter-scraper
+
+      image:
+         repository: 
+         tag: "latest"
+         pullPolicy: Always
+
+      namespace: monitoring
+
+      security:
+      enabled: true
+      serviceAccountName: consul-exporter-scraper-service-account
+      env:
+      environment: "test" #Kubernetes environment
+      prometheusNamespace: "monitoring" #The namespace on which Prometheus runs
+      consulAddress: "0.0.0.0" #Consul Address List
+
+      schedule: "* * * * *" 
+```
+
+4. Install the Helm chart:
+
+   ```bash
+   helm install <release-name> ./helm --namespace <namespace> -f values.yaml
+   ```
+
+5. Verify the installation:
+
+   ```bash
+   kubectl get cronjobs -n <namespace>
+   ```
 
 <!-- LICENSE -->
 ## License
