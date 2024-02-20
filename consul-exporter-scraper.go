@@ -42,7 +42,7 @@ func main() {
 			logrus.Info("Master Node IP: ", masterNode.IP)
 			serviceInfo := models.ServiceInfo{
 				ID:      masterNode.Hostname,
-				Name:    "k8s" + environment,
+				Name:    "k8s-" + environment,
 				Address: masterNode.IP,
 				Port:    nodePort,
 				Meta: struct {
