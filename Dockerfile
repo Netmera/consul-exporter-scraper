@@ -19,6 +19,7 @@ RUN curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -
 
 WORKDIR /root/
 
+RUN apk add --no-cache libc6-compat
 COPY --from=builder /app/consul-exporter-scraper .
 
 CMD ["./consul-exporter-scraper"]
