@@ -1,15 +1,15 @@
 {
     "consuladdresses": [""],
     "exporters": [
-        {"name": "Mongo Exporter", "port": 9216, "exporttype": "mongodb"},
-        {"name": "Postgresql Exporter", "port": 9187, "exporttype": "postgresql"},
-        {"name": "Kubernetes Cert Exporter", "port": 9117, "exporttype": "kubernetes"},
-        {"name": "Nginx Log Exporter", "port": 4040, "exporttype": "nginx"},
-        {"name": "Nginx Exporter", "port": 9113, "exporttype": "nginx"},
-        {"name": "Kafka Exporter", "port": 7072, "exporttype": "kafka"},
-        {"name": "Kafka Consumer Group Exporter", "port": 9093, "exporttype": "kafka"},
-        {"name": "Cassandra Exporter", "port": 9999, "exporttype": "cassandra"},
-        {"name": "Blackbox Exporter", "port": 9115, "exporttype": "blackbox"},
-        {"name": "Node Exporter", "port": 9100, "exporttype": "node"}
+        {"name": "Mongo Exporter", "port": 9216, "exporttype": "mongodb-exporter"},
+        {"name": "Postgresql Exporter", "port": 9187, "exporttype": "postgresql-exporter"},
+        {"name": "Kubernetes Cert Exporter", "port": 9117, "exporttype": "kubernetes-cert-exporter"},
+        {"name": "Nginx Log Exporter", "port": 4040, "exporttype": "nginx-log-exporter"},
+        {"name": "Nginx Exporter", "port": 9113, "exporttype": "nginx-exporter"},
+        {"name": "Kafka Exporter", "port": 7072, "exporttype": "kafka-exporter"},
+        {"name": "Kafka Consumer Group Exporter", "port": 9093, "exporttype": "kafka-consumer-exporter"},
+        {"name": "Cassandra Exporter", "port": 9999, "exporttype": "cassandra-exporter"},
+        {"name": "Blackbox Exporter", "port": 9115, "exporttype": "blackbox-exporter"},
+        {"name": "Node Exporter", "port": 9100, "exporttype": "node-exporter"}
     ]
 }

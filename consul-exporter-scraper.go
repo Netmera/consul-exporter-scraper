@@ -108,7 +108,7 @@ func main() {
 			// Prepare data
 			serviceInfo := models.ServiceInfo{
 				ID:      hostname,
-				Name:    *environment,
+				Name:    *environment + "-" + port.ExportType,
 				Address: ips[0].String(),
 				Port:    port.Port,
 				Meta: struct {
