@@ -107,7 +107,7 @@ func main() {
 		for _, port := range openPorts {
 			// Prepare data
 			serviceInfo := models.ServiceInfo{
-				ID:      hostname,
+				ID:      hostname + "-" + port.ExportType,
 				Name:    *environment + "-" + port.ExportType,
 				Address: ips[0].String(),
 				Port:    port.Port,
@@ -134,7 +134,6 @@ func main() {
 				}
 
 				logrus.Infof("Service registered with Consul at %s", consulAddress)
-				break
 			}
 
 			if err != nil {
