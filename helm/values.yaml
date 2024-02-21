@@ -2,7 +2,7 @@ name: consul-exporter-scraper
 
 image:
   repository: netmeraops/consul-exporter-scraper
-  tag: "v0.0.4"
+  tag: "v0.0.5"
   pullPolicy: Always
 
 namespace: monitoring

@@ -107,7 +107,7 @@ func main() {
 		for _, port := range openPorts {
 			// Prepare data
 			serviceInfo := models.ServiceInfo{
-				ID:      hostname,
+				ID:      hostname + "-" + port.ExportType,
 				Name:    *environment + "-" + port.ExportType,
 				Address: ips[0].String(),
 				Port:    port.Port,
@@ -117,6 +117,7 @@ func main() {
 				}{Env: *environment, Type: port.ExportType},
 			}
 
+			fmt.Println("Service Info: ", serviceInfo)
 			// Convert struct to JSON
 			jsonData, err := json.Marshal(serviceInfo)
 			if err != nil {
