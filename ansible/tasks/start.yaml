@@ -4,9 +4,11 @@
     name: consul-exporter-scraper
     state: started
     enabled: yes
+    daemon_reload: yes
 
 - name: Start Consul Exporter Scraper timer service
   systemd:
     name: consul-exporter-scraper.timer
     state: started
     enabled: yes
+    deamon_reload: yes
