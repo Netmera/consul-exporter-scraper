@@ -117,6 +117,7 @@ func main() {
 				}{Env: *environment, Type: port.ExportType},
 			}
 
+			fmt.Println("Service Info: ", serviceInfo)
 			// Convert struct to JSON
 			jsonData, err := json.Marshal(serviceInfo)
 			if err != nil {
@@ -134,6 +135,7 @@ func main() {
 				}
 
 				logrus.Infof("Service registered with Consul at %s", consulAddress)
+				break
 			}
 
 			if err != nil {
