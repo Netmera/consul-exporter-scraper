@@ -1,29 +1,44 @@
 package utils
 
 import (
+	"context"
 	"fmt"
-	"os/exec"
-	"strings"
+
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/rest"
 )
 
-// GetPrometheusNodePort retrieves the node port of Prometheus service
-func GetPrometheusNodePort(namespace string) (int, error) {
-	cmd := exec.Command("kubectl", "get", "svc", "prometheus-server", "-n", namespace, "-o=jsonpath={.spec.ports[0].nodePort}")
-	fmt.Println("Command: ", cmd)
-	output, err := cmd.Output()
+func GetPrometheusNodePort(namespace string) (int32, error) {
+
+	config, err := rest.InClusterConfig()
 	if err != nil {
-		if exitError, ok := err.(*exec.ExitError); ok {
-			return 0, fmt.Errorf("error running kubectl command: %v, stderr: %s", err, string(exitError.Stderr))
-		}
-		return 0, fmt.Errorf("error running kubectl command: %v", err)
+		return 0, fmt.Errorf("error getting in-cluster config: %v", err)
 	}
 
-	nodePortStr := strings.TrimSpace(string(output))
-	var nodePort int
-	_, err = fmt.Sscanf(nodePortStr, "%d", &nodePort)
+	clientset, err := kubernetes.NewForConfig(config)
 	if err != nil {
-		return 0, fmt.Errorf("error parsing node port: %v", err)
+		return 0, fmt.Errorf("error creating Kubernetes client: %v", err)
 	}
-	fmt.Println("Node Port: ", nodePort)
+
+	serviceName := "prometheus-server"
+
+	service, err := clientset.CoreV1().Services(namespace).Get(context.TODO(), serviceName, metav1.GetOptions{})
+	if err != nil {
+		return 0, fmt.Errorf("error getting service %s in namespace %s: %v", serviceName, namespace, err)
+	}
+
+	var nodePort int32
+	for _, port := range service.Spec.Ports {
+		if port.Name == "http" {
+			nodePort = port.NodePort
+			break
+		}
+	}
+
+	if nodePort == 0 {
+		return 0, fmt.Errorf("node port not found for service %s in namespace %s", serviceName, namespace)
+	}
+
 	return nodePort, nil
 }

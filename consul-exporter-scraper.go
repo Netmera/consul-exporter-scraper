@@ -44,7 +44,7 @@ func main() {
 				ID:      masterNode.Hostname,
 				Name:    "k8s-" + environment,
 				Address: masterNode.IP,
-				Port:    nodePort,
+				Port:    int(nodePort),
 				Meta: struct {
 					Env  string `json:"env"`
 					Type string `json:"type"`
