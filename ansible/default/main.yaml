@@ -1,4 +1,4 @@
 ---
 consul_exporter_scraper_consul_adress: [""] #consul adress 
 consul_exporter_scraper_env: "test"
-consul_exporter_scraper_version: "v0.0.5"
+consul_exporter_scraper_version: "v0.0.7"
