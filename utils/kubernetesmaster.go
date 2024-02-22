@@ -1,49 +1,51 @@
-// utils/master_nodes.go
-
 package utils
 
 import (
-	"encoding/json"
+	"context"
 	"fmt"
-	"os/exec"
+
+	corev1 "k8s.io/api/core/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/rest"
 
 	"github.com/Netmera/consul-exporter-scraper/models"
 )
 
 func GetMasterNodes() ([]models.MasterNode, error) {
-	cmd := exec.Command("kubectl", "get", "nodes", "--selector=node-role.kubernetes.io/master", "-o=json")
-	output, err := cmd.CombinedOutput()
+	config, err := rest.InClusterConfig()
 	if err != nil {
-		return nil, fmt.Errorf("error running kubectl command: %v", err)
+		return nil, fmt.Errorf("error getting in-cluster config: %v", err)
 	}
 
-	var nodeList struct {
-		Items []struct {
-			Metadata struct {
-				Name string `json:"name"`
-			} `json:"metadata"`
-			Status struct {
-				Addresses []struct {
-					Address string `json:"address"`
-					Type    string `json:"type"`
-				} `json:"addresses"`
-			} `json:"status"`
-		} `json:"items"`
+	clientset, err := kubernetes.NewForConfig(config)
+	if err != nil {
+		return nil, fmt.Errorf("error creating Kubernetes client: %v", err)
 	}
-	if err := json.Unmarshal(output, &nodeList); err != nil {
-		return nil, fmt.Errorf("error unmarshalling JSON output: %v", err)
+
+	labelSelector := "node-role.kubernetes.io/master"
+
+	nodeList, err := clientset.CoreV1().Nodes().List(context.TODO(), metav1.ListOptions{
+		LabelSelector: labelSelector,
+	})
+	if err != nil {
+		return nil, fmt.Errorf("error getting master nodes: %v", err)
 	}
 
 	var masterNodes []models.MasterNode
-	for _, item := range nodeList.Items {
-		for _, addr := range item.Status.Addresses {
-			if addr.Type == "InternalIP" {
-				masterNodes = append(masterNodes, models.MasterNode{
-					Hostname: item.Metadata.Name,
-					IP:       addr.Address,
-				})
+	for _, node := range nodeList.Items {
+		var internalIP string
+		for _, addr := range node.Status.Addresses {
+			if addr.Type == corev1.NodeInternalIP {
+				internalIP = addr.Address
 				break
 			}
+		}
+		if internalIP != "" {
+			masterNodes = append(masterNodes, models.MasterNode{
+				Hostname: node.Name,
+				IP:       internalIP,
+			})
 		}
 	}
 
