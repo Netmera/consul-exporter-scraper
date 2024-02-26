@@ -49,18 +49,33 @@ Example `exporter.yaml` file:
 {
     "consuladdresses": ["your_consul_address_1", "your_consul_address_2"],
     "exporters": [
-        {"name": "Mongo Exporter", "port": 9216, "exporttype": "mongodb"},
-        {"name": "Postgresql Exporter", "port": 9187, "exporttype": "postgresql"},
-        {"name": "Kubernetes Cert Exporter", "port": 9117, "exporttype": "kubernetes"},
-        {"name": "Nginx Log Exporter", "port": 4040, "exporttype": "nginx"},
-        {"name": "Nginx Exporter", "port": 9113, "exporttype": "nginx"},
-        {"name": "Kafka Exporter", "port": 7072, "exporttype": "kafka"},
-        {"name": "Kafka Consumer Group Exporter", "port": 9093, "exporttype": "kafka"},
-        {"name": "Cassandra Exporter", "port": 9999, "exporttype": "cassandra"},
-        {"name": "Blackbox Exporter", "port": 9115, "exporttype": "blackbox"},
-        {"name": "Node Exporter", "port": 9100, "exporttype": "node"}
+        {"name": "Mongo Exporter", "port": 9216, "exporttype": "mongodb-exporter"},
+        {"name": "Postgresql Exporter", "port": 9187, "exporttype": "postgresql-exporter"},
+        {"name": "Kubernetes Cert Exporter", "port": 9117, "exporttype": "kubernetes-cert-exporter"},
+        {"name": "Nginx Log Exporter", "port": 4040, "exporttype": "nginx-log-exporter"},
+        {"name": "Nginx Exporter", "port": 9113, "exporttype": "nginx-exporter"},
+        {"name": "Kafka Exporter", "port": 7072, "exporttype": "kafka-exporter"},
+        {"name": "Kafka Consumer Group Exporter", "port": 9093, "exporttype": "kafka-consumer-exporter"},
+        {"name": "Cassandra Exporter", "port": 9999, "exporttype": "cassandra-exporter"},
+        {"name": "Cassandra Exporter", "port": 9500, "exporttype": "cassandra-exporter"},
+        {"name": "Blackbox Exporter", "port": 9115, "exporttype": "blackbox-exporter"},
+        {"name": "Node Exporter", "port": 9100, "exporttype": "node-exporter"},
+        {"name": "Zookeeper Exporter", "port": 9141,"exporttype":"zookeeper-exporter"},
+        {"name": "Redis Exporter", "port": 9121, "exporttype": "redis-exporter"},
+        {"name": "Mysql Exporter", "port": 9104, "exporttype": "mysql-exporter"},
+        {"name": "Memcached Exporter", "port": 9150, "exporttype": "memcached-exporter"},
+        {"name": "Elasticsearch Exporter", "port": 9114, "exporttype": "elasticsearch-exporter"},
+        {"name": "Prometheus Exporter", "port": 9115, "exporttype": "prometheus-exporter"},
+        {"name": "Consul Exporter", "port": 9107, "exporttype": "consul-exporter"},
+        {"name": "Rabbitmq Exporter", "port": 9419, "exporttype": "rabbitmq-exporter"},
+        {"name": "ClickHouse Exporter", "port": 9363, "exporttype": "clickhouse-exporter"},
+        {"name": "HAProxy Exporter", "port": 9101, "exporttype": "haproxy-exporter"},
+        {"name": "Jenkins Exporter", "port": 9116, "exporttype": "jenkins-exporter"},
+        {"name": "GitLab Exporter", "port": 9231, "exporttype": "gitlab-exporter"},
+        {"name": "Apache Exporter", "port": 9118, "exporttype": "apache-exporter"}
     ]
 }
+
 ```
 ### Installation
 
