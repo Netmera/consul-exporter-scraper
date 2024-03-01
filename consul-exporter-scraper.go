@@ -99,7 +99,7 @@ func main() {
 
 		openPorts := make([]models.ExporterModel, 0)
 		for _, exporter := range config.Exporters {
-			if utils.CheckPortOpen(exporter.Port) {
+			if utils.CheckPortOpen(exporter.Port, ips[0].String()) {
 				openPorts = append(openPorts, exporter)
 			}
 		}
