@@ -41,9 +41,9 @@ func LoadConfigFromFile(filename string) (*models.CheckPortModel, error) {
 }
 
 // CheckPortOpen checks if the given port is open
-func CheckPortOpen(port int) bool {
+func CheckPortOpen(port int, ip string) bool {
 	logrus.Infof("Checking if port %d is open", port)
-	address := net.JoinHostPort("localhost", strconv.Itoa(port))
+	address := net.JoinHostPort(ip, strconv.Itoa(port))
 	conn, err := net.DialTimeout("tcp", address, time.Second)
 	if err != nil {
 		logrus.Warnf("Error checking port %d: %v", port, err)
