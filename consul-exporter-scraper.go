@@ -59,17 +59,20 @@ func main() {
 
 			// Register service with Consul
 			for _, consulAddress := range addresses {
-				logrus.Info("Consul Address: ", consulAddress)
 				consulURL := fmt.Sprintf("http://%s:8500/v1/agent/service/register", consulAddress)
 
-				err = utils.RegisterServiceWithConsul(jsonData, consulURL)
-				if err != nil {
-					logrus.Warnf("Error registering service with Consul at %s: %v", consulAddress, err)
-					continue
-				}
+				if utils.CheckService(serviceInfo.Name, serviceInfo.Address, serviceInfo.Port, consulAddress) {
+					logrus.Warnf("Service already registered with Consul at %s", consulAddress)
+				} else {
+					err = utils.RegisterServiceWithConsul(jsonData, consulURL)
+					if err != nil {
+						logrus.Warnf("Error registering service with Consul at %s: %v", consulAddress, err)
+						continue
+					}
 
-				logrus.Infof("Service registered with Consul at %s", consulAddress)
-				break
+					logrus.Infof("Service registered with Consul at %s", consulAddress)
+					break
+				}
 			}
 			if err != nil {
 				logrus.Fatalf("Failed to register service with any Consul addresses: %v", err)
@@ -126,16 +129,20 @@ func main() {
 
 			// Register service with Consul
 			for _, consulAddress := range config.ConsulAddresses {
-				consulURL := fmt.Sprintf("http://%s/v1/agent/service/register", consulAddress)
+				consulURL := fmt.Sprintf("http://%s:8500/v1/agent/service/register", consulAddress)
 
-				err = utils.RegisterServiceWithConsul(jsonData, consulURL)
-				if err != nil {
-					logrus.Warnf("Error registering service with Consul at %s: %v", consulAddress, err)
-					continue
+				if utils.CheckService(serviceInfo.Name, serviceInfo.Address, serviceInfo.Port, consulAddress) {
+					logrus.Warnf("Service already registered with Consul at %s", consulAddress)
+				} else {
+					err = utils.RegisterServiceWithConsul(jsonData, consulURL)
+					if err != nil {
+						logrus.Warnf("Error registering service with Consul at %s: %v", consulAddress, err)
+						continue
+					}
+
+					logrus.Infof("Service registered with Consul at %s", consulAddress)
+					break
 				}
-
-				logrus.Infof("Service registered with Consul at %s", consulAddress)
-				break
 			}
 
 			if err != nil {
