@@ -5,10 +5,13 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/Netmera/consul-exporter-scraper/models"
+	"github.com/sirupsen/logrus"
 )
 
-func CheckService(serviceName string, consulAddress string) bool {
-	consulURL := fmt.Sprintf("http://%s:8500/v1/agent/services", consulAddress)
+func CheckService(serviceName string, serviceAddress string, servicePort int, consulAddress string) bool {
+	consulURL := fmt.Sprintf("http://%s:8500/v1/agent/services", serviceAddress)
 
 	resp, err := http.Get(consulURL)
 	if err != nil {
@@ -20,11 +23,16 @@ func CheckService(serviceName string, consulAddress string) bool {
 		log.Fatalf("Error making request to Consul: %v", resp.Status)
 	}
 
-	services := make(map[string]interface{})
+	var services map[string]models.Service
 	if err := json.NewDecoder(resp.Body).Decode(&services); err != nil {
 		log.Fatal(err)
 	}
+	logrus.Info(services)
 
-	_, ok := services[serviceName]
-	return ok
+	for _, service := range services {
+		if service.Address == serviceAddress && service.Port == servicePort && service.ID == serviceName {
+			return true
+		}
+	}
+	return false
 }
