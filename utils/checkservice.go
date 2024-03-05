@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func checkServiceExistence(serviceName string, consulAddress string) bool {
+func checkService(serviceName string, consulAddress string) bool {
 	consulURL := fmt.Sprintf("http://%s:8500/v1/agent/services", consulAddress)
 
 	resp, err := http.Get(consulURL)
