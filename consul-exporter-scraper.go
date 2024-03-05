@@ -61,7 +61,7 @@ func main() {
 			for _, consulAddress := range addresses {
 				consulURL := fmt.Sprintf("http://%s:8500/v1/agent/service/register", consulAddress)
 
-				if utils.CheckService(serviceInfo.Name, consulAddress) {
+				if utils.CheckService(serviceInfo.Name, serviceInfo.Address, serviceInfo.Port, consulAddress) {
 					err = utils.RegisterServiceWithConsul(jsonData, consulURL)
 					if err != nil {
 						logrus.Warnf("Error registering service with Consul at %s: %v", consulAddress, err)
@@ -131,7 +131,7 @@ func main() {
 			for _, consulAddress := range config.ConsulAddresses {
 				consulURL := fmt.Sprintf("http://%s:8500/v1/agent/service/register", consulAddress)
 
-				if utils.CheckService(serviceInfo.Name, consulAddress) {
+				if utils.CheckService(serviceInfo.Name, serviceInfo.Address, serviceInfo.Port, consulAddress) {
 					err = utils.RegisterServiceWithConsul(jsonData, consulURL)
 					if err != nil {
 						logrus.Warnf("Error registering service with Consul at %s: %v", consulAddress, err)
