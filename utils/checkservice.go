@@ -11,7 +11,7 @@ import (
 )
 
 func CheckService(serviceName string, serviceAddress string, servicePort int, consulAddress string) bool {
-	consulURL := fmt.Sprintf("http://%s:8500/v1/agent/services", serviceAddress)
+	consulURL := fmt.Sprintf("http://%s:8500/v1/agent/services", consulAddress)
 
 	resp, err := http.Get(consulURL)
 	if err != nil {
@@ -25,7 +25,7 @@ func CheckService(serviceName string, serviceAddress string, servicePort int, co
 
 	var services map[string]models.Service
 	if err := json.NewDecoder(resp.Body).Decode(&services); err != nil {
-		log.Fatal(err)
+		logrus.Fatalf("Error decoding response: %v", err)
 	}
 
 	for _, service := range services {
