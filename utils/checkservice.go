@@ -27,9 +27,9 @@ func CheckService(serviceName string, serviceAddress string, servicePort int, co
 	if err := json.NewDecoder(resp.Body).Decode(&services); err != nil {
 		log.Fatal(err)
 	}
-	logrus.Info(services)
 
 	for _, service := range services {
+		logrus.Infof("Service: %v", service)
 		if service.Address == serviceAddress && service.Port == servicePort {
 			return true
 		}
