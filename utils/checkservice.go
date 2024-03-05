@@ -30,7 +30,7 @@ func CheckService(serviceName string, serviceAddress string, servicePort int, co
 	logrus.Info(services)
 
 	for _, service := range services {
-		if service.Address == serviceAddress && service.Port == servicePort && service.ID == serviceName {
+		if service.Address == serviceAddress && service.Port == servicePort {
 			return true
 		}
 	}
