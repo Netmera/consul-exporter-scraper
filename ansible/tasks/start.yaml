@@ -11,4 +11,3 @@
     name: consul-exporter-scraper.timer
     state: started
     enabled: yes
-    deamon_reload: yes

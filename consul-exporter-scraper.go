@@ -61,18 +61,13 @@ func main() {
 			for _, consulAddress := range addresses {
 				consulURL := fmt.Sprintf("http://%s:8500/v1/agent/service/register", consulAddress)
 
-				if utils.CheckService(serviceInfo.Name, serviceInfo.Address, serviceInfo.Port, consulAddress) {
-					logrus.Warnf("Service already registered with Consul at %s", consulAddress)
-				} else {
-					err = utils.RegisterServiceWithConsul(jsonData, consulURL)
-					if err != nil {
-						logrus.Warnf("Error registering service with Consul at %s: %v", consulAddress, err)
-						continue
-					}
-
-					logrus.Infof("Service registered with Consul at %s", consulAddress)
-					break
+				err = utils.RegisterServiceWithConsul(jsonData, consulURL)
+				if err != nil {
+					logrus.Warnf("Error registering service with Consul at %s: %v", consulAddress, err)
 				}
+
+				logrus.Infof("Service registered with Consul at %s: %v", consulAddress)
+
 			}
 			if err != nil {
 				logrus.Fatalf("Failed to register service with any Consul addresses: %v", err)
@@ -120,7 +115,7 @@ func main() {
 				}{Env: *environment, Type: port.ExportType},
 			}
 
-			fmt.Println("Service Info: ", serviceInfo)
+			logrus.Infof("Service Info: %v", serviceInfo)
 			// Convert struct to JSON
 			jsonData, err := json.Marshal(serviceInfo)
 			if err != nil {
@@ -131,18 +126,13 @@ func main() {
 			for _, consulAddress := range config.ConsulAddresses {
 				consulURL := fmt.Sprintf("http://%s:8500/v1/agent/service/register", consulAddress)
 
-				if utils.CheckService(serviceInfo.Name, serviceInfo.Address, serviceInfo.Port, consulAddress) {
-					logrus.Warnf("Service already registered with Consul at %s", consulAddress)
-				} else {
-					err = utils.RegisterServiceWithConsul(jsonData, consulURL)
-					if err != nil {
-						logrus.Warnf("Error registering service with Consul at %s: %v", consulAddress, err)
-						continue
-					}
-
-					logrus.Infof("Service registered with Consul at %s", consulAddress)
-					break
+				err = utils.RegisterServiceWithConsul(jsonData, consulURL)
+				if err != nil {
+					logrus.Warnf("Error registering service with Consul at %s: %v", consulAddress, err)
 				}
+
+				logrus.Infof("Service registered with Consul at %s: %v", consulAddress)
+
 			}
 
 			if err != nil {
