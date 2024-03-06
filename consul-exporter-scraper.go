@@ -66,7 +66,7 @@ func main() {
 					logrus.Warnf("Error registering service with Consul at %s: %v", consulAddress, err)
 				}
 
-				logrus.Infof("Service registered with Consul at %s: %v", consulAddress, serviceInfo.Name)
+				logrus.Infof("Service registered with Consul at %s: %v", consulAddress, serviceInfo.ID)
 
 			}
 			if err != nil {
@@ -131,7 +131,7 @@ func main() {
 					logrus.Warnf("Error registering service with Consul at %s: %v", consulAddress, err)
 				}
 
-				logrus.Infof("Service registered with Consul at %s: %v", consulAddress, serviceInfo.Name)
+				logrus.Infof("Service registered with Consul at %s: %v", consulAddress, serviceInfo.ID)
 
 			}
 
